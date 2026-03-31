@@ -1,18 +1,20 @@
 //import mongo collections, bcrypt and implement the following data functions
+//import * as helper from "../helpers.js";
+//import { flatten, unflatten } from "flat";
 import axios from "axios";
-import * as helper from "./redisCache.js";
-
+import { createClient } from "redis";
 
 const POKEMON_API_URL = "https://pokeapi.co/api/v2/pokemon/";
 const POKEMON_ABILITIES_API_URL = "https://pokeapi.co/api/v2/ability/";
 const POKEMON_MOVES_API_URL = "https://pokeapi.co/api/v2/move/";
 
-
+export const client = createClient();
 
 const exportedMethods = {
   async getPokemonData(p_id) {
-    p_id = helper.errorCheckID(p_id);
-
+    //ADD TRY CATCH
+    //p_id = helper.errorCheckID(p_id);
+    //testisnumber()
     const { data } = await axios.get(`${POKEMON_API_URL}${p_id}`);
 
     if (!data) {
@@ -35,7 +37,7 @@ const exportedMethods = {
     return pokemonSummary;
   },
   async getPokemonAbilitiesData(p_id) {
-    p_id = helper.errorCheckID(p_id);
+    //p_id = helper.errorCheckID(p_id);
 
     const { data } = await axios.get(`${POKEMON_ABILITIES_API_URL}${p_id}`);
 
@@ -54,8 +56,9 @@ const exportedMethods = {
     return pokemonSummary;
   },
   async getPokemonMovesData(p_id) {
-    p_id = helper.errorCheckID(p_id);
-
+    //ADD TRY CATCH
+    //p_id = helper.errorCheckID(p_id);
+    //testisnumber()
     const { data } = await axios.get(`${POKEMON_MOVES_API_URL}${p_id}`);
 
     const pokemonMove = {
