@@ -1,5 +1,5 @@
 import Pokemon from "./components/Pokemon";
-//import PokemonList from "./components/PokemonList";
+import PokemonList from "./components/PokemonList";
 //import PokemonData from "./data/pokemonData";
 import Home from "./components/Home";
 import { Routes, Link, Route } from "react-router-dom"; 
@@ -29,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pokemon/:id" element={<Pokemon />} />
-        {/* <Route path="/pokemonList" element={<PokemonList />} /> */}
+        { <Route path="/pokemonList" element={<PokemonList />} /> }
         {/* <Route path="/abilities/" element={<Abilities />} /> */}
         {/* <Route path="/types/" element={<Types />} /> */}
       </Routes>

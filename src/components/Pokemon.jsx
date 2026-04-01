@@ -32,7 +32,7 @@ function Pokemon(props) {
         return <div>Loading...</div>
     } else {
         return <div>
-            <h1>Pokemon ID: {pokemonSummary.data.id}</h1>
+            
             <Card sx={{ maxWidth: 345 }}>
                 <CardHeader title={pokemonSummary.data.name} />
                 <CardMedia component="img" height="140" image={pokemonSummary.data.sprites.front_default} alt={pokemonSummary.data.name} />
