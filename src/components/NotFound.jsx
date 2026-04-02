@@ -7,7 +7,7 @@ function NotFound() {
         <Box display="flex" flexDirection="column" alignItems="center" mt={8} gap={2}>
             <Typography variant="h2">404</Typography>
             <Typography variant="h5">Page Not Found</Typography>
-            <Typography variant="body1" color="text.secondary">
+            <Typography variant="body1" color="white">
                 That route, Pokémon, ability, or type doesn't exist.
             </Typography>
             <Button variant="contained" component={Link} to="/">
