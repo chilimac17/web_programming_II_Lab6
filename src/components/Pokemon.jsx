@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import {
-    Box, Card, CardContent, CardMedia, Typography, Chip, Stack,
-    Divider, Grid, LinearProgress
-} from "@mui/material";
+import { Card, CardContent, CardMedia, Typography, Chip, Stack, Grid, LinearProgress } from "@mui/material";
 import NotFound from "./NotFound";
 
 const POKEMON_API_URL = "https://pokeapi.co/api/v2/pokemon/";
@@ -31,22 +28,28 @@ function Pokemon() {
         fetchData();
     }, [id]);
 
-    if (notFound) return <NotFound />;
-    if (loading) return <div>Loading....</div>
+    if (notFound) {
+        return <NotFound />;
+    } 
+
+    if (loading) {
+        return <div>Loading....</div>;
+    }
 
     const extractId = (url) => url.split("/").filter(Boolean).pop();
     
-    const image =
-        pokemon.sprites.other["official-artwork"].front_default ||
-        pokemon.sprites.front_default;
+    const image = pokemon.sprites.versions["generation-iv"].platinum.front_default || pokemon.sprites.other["official-artwork"].front_default;  
+    //pokemon.sprites.other["official-artwork"].front_default;  
+    //pokemon.sprites.front_shiny;   
+    //pokemon.sprites.front_default;
+
 
     return (
         <div>
 
             {/* Header */}
-            <Grid container spacing={4} alignItems="flex-start">
-                <Grid item xs={12} sm={4}>
-                    <Card>
+            <Grid item xs={12} sm={4} container spacing={4} alignItems="flex-start">
+                <Card>
                         <CardMedia
                             component="img"
                             image={image}
@@ -60,8 +63,7 @@ function Pokemon() {
                                 #{pokemon.id}
                             </Typography>
                         </CardContent>
-                    </Card>
-                </Grid>
+                </Card>
 
                 {/* Basic Info */}
                 <Grid item xs={12} sm={8}>
@@ -76,83 +78,105 @@ function Pokemon() {
                         </Typography>
                     </Typography>
 
-                    <Divider sx={{ my: 2 }} />
+                    <br />
 
                     {/* Types */}
                     <Typography variant="h6" gutterBottom>Types</Typography>
-                    <Stack direction="row" gap={1} mb={2}>
+                    <div style={{ display: "flex", gap: "8px", marginBottom: "16px" }}>
                         {pokemon.types.map(({ type }) => (
-                            <Chip
+                            <Link
                                 key={type.name}
-                                label={type.name}
-                                component={Link}
                                 to={`/types/${extractId(type.url)}`}
-                                clickable
-                                sx={{ textTransform: "capitalize" }}
-                            />
+                                style={{
+                                    textDecoration: "none",
+                                    padding: "4px 12px",
+                                    borderRadius: "16px",
+                                    backgroundColor: "#e0e0e0",
+                                    color: "#000",
+                                    fontSize: "0.8125rem",
+                                    textTransform: "capitalize",
+                                    display: "inline-block"
+                                }}
+                            >
+                                {type.name}
+                            </Link>
                         ))}
-                    </Stack>
-
+                    </div>
+                    
                     {/* Abilities */}
                     <Typography variant="h6" gutterBottom>Abilities</Typography>
-                    <Stack direction="row" gap={1} flexWrap="wrap">
+                    <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                         {pokemon.abilities.map(({ ability, is_hidden }) => (
-                            <Chip
+                            <Link
                                 key={ability.name}
-                                label={`${ability.name}${is_hidden ? " (hidden)" : ""}`}
-                                component={Link}
                                 to={`/abilities/${extractId(ability.url)}`}
-                                clickable
-                                variant={is_hidden ? "outlined" : "filled"}
-                                sx={{ textTransform: "capitalize" }}
-                            />
+                                style={{
+                                    textDecoration: "none",
+                                    padding: "4px 12px",
+                                    borderRadius: "16px",
+                                    backgroundColor: is_hidden ? "transparent" : "#e0e0e0",
+                                    color: is_hidden ? "#e0e0e0" : "#000",
+                                    fontSize: "0.8125rem",
+                                    textTransform: "capitalize",
+                                    display: "inline-block",
+                                    border: is_hidden ? "1px solid #e0e0e0" : "none"
+                                }}
+                            >
+                                {`${ability.name}${is_hidden ? " (hidden)" : ""}`}
+                            </Link>
                         ))}
-                    </Stack>
+                    </div>
                 </Grid>
             </Grid>
 
-            <Divider sx={{ my: 3 }} />
+            <br />
 
-            
             <div>
                 {/* Stats */}
             <Typography variant="h5" gutterBottom>Base Stats</Typography>
                 {pokemon.stats.map(({ stat, base_stat }) => (
-                    <Box key={stat.name} mb={1}>
-                        <Box display="flex" justifyContent="space-between">
+                    <div key={stat.name} mb={1}>
+                        <div display="flex" justifyContent="space-between">
                             <Typography variant="body2" textTransform="capitalize">
                                 {stat.name}
                             </Typography>
                             <Typography variant="body2">{base_stat}</Typography>
-                        </Box>
+                        </div>
                         <LinearProgress
                             variant="determinate"
                             value={Math.min((base_stat / 255) * 100, 100)}
                             sx={{ height: 8, borderRadius: 4 }}
                         />
-                    </Box>
+                    </div>
                 ))}
             </div>
-
-            <Divider sx={{ my: 3 }} />
+            <br />
 
             {/* Moves */}
             <Typography variant="h5" gutterBottom>Moves</Typography>
-            <Stack direction="row" flexWrap="wrap" gap={1}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                 {pokemon.moves.slice(0, 20).map(({ move }) => (
-                    <Chip
+                    <span
                         key={move.name}
-                        label={move.name}
-                        size="small"
-                        sx={{ textTransform: "capitalize" }}
-                    />
+                        style={{
+                            padding: "2px 8px",
+                            borderRadius: "16px",
+                            backgroundColor: "#e0e0e0",
+                            color: "#000",
+                            fontSize: "0.75rem",
+                            textTransform: "capitalize",
+                            display: "inline-block"
+                        }}
+                    >
+                        {move.name}
+                    </span>
                 ))}
                 {pokemon.moves.length > 20 && (
                     <Typography variant="body2" color="white" alignSelf="center">
                         +{pokemon.moves.length - 20} more
                     </Typography>
                 )}
-            </Stack>
+            </div>
 
         </div>
     );

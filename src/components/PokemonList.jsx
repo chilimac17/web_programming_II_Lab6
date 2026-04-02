@@ -28,9 +28,7 @@ function PokemonList() {
             setNotFound(false);
             try {
                 const offset = (currentPage - 1) * PAGE_SIZE;
-                const { data } = await axios.get(
-                    `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${PAGE_SIZE}`
-                );
+                const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${PAGE_SIZE}`);
 
                 const total = Math.ceil(data.count / PAGE_SIZE);
                 setTotalPages(total);
@@ -43,7 +41,7 @@ function PokemonList() {
                 // Extract ID from each URL and fetch details
                 const detailRequests = data.results.map(p => axios.get(p.url));
                 const details = await Promise.all(detailRequests);
-                setPokemonList(details.map(r => r.data));
+                setPokemonList(details.map(p_pokemon => p_pokemon.data));
             } catch (error) {
                 console.error("Error fetching Pokémon list:", error);
                 setNotFound(true);
@@ -55,21 +53,26 @@ function PokemonList() {
         fetchList();
     }, [currentPage]);
 
-    if (notFound) return <NotFound />;
-    if (loading) return <div>Loading.......</div>;
+    if (notFound) {
+        return <NotFound />;
+    }
+    
+    if (loading) {
+        return <div>Loading.......</div>;
+    }
 
     return (
         <div>
             <Typography variant="h4" textAlign="center" mt={2} mb={2}>Pokémon</Typography>
             <Grid container spacing={2} padding={2}>
                 {pokemonList.map(pokemon => (
-                    <Grid item xs={12} sm={6} md={4} lg={3} key={pokemon.id}>
+                    <Grid item xs={10} sm={4} md={3} lg={2} key={pokemon.id}>
                         <Card sx={{ maxWidth: 345 }}>
                             <CardActionArea component={Link} to={`/pokemon/${pokemon.id}`}>
                                 <CardMedia
                                     component="img"
                                     height="140"
-                                    image={pokemon.sprites.other["official-artwork"].front_default || pokemon.sprites.front_default}
+                                    image={ pokemon.sprites.versions["generation-iv"].platinum.front_default || pokemon.sprites.other["official-artwork"].front_default}
                                     alt={pokemon.name}
                                 />
                                 <CardContent>

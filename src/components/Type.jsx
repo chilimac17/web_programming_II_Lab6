@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Divider, List, ListItem, Chip, Stack } from "@mui/material";
+import { Typography, List, ListItem } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import NotFound from "./NotFound";
@@ -31,26 +31,33 @@ function Type() {
     const dr = type.damage_relations;
 
     const DamageSection = ({ label, types }) => (
-        <div>
-            <Typography variant="body2"><strong>{label}:</strong></Typography>
-            <Stack direction="row" flexWrap="wrap" gap={1} mt={0.5}>
-                {types.length === 0
-                    ? <Typography variant="body2" color="white">None</Typography>
-                    : types.map(t => (
-                        <Chip
-                            key={t.name}
-                            label={t.name}
-                            component={Link}
-                            to={`/types/${extractId(t.url)}`}
-                            clickable
-                            size="small"
-                            sx={{ textTransform: "capitalize" }}
-                        />
-                    ))
-                }
-            </Stack>
+    <div style={{ width: "100%", marginBottom: "12px" }}>
+        <Typography variant="body2"><strong>{label}:</strong></Typography>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "4px", textAlign: "center" }}>
+            {types.length === 0
+                ? <Typography variant="body2" color="white">None</Typography>
+                : types.map(t => (
+                    <Link
+                        key={t.name}
+                        to={`/types/${extractId(t.url)}`}
+                        style={{
+                            textDecoration: "none",
+                            padding: "2px 8px",
+                            borderRadius: "16px",
+                            backgroundColor: "#0e0e0e",
+                            color: "#white",
+                            fontSize: "0.75rem",
+                            textTransform: "capitalize",
+                            display: "inline-block"
+                        }}
+                    >
+                        {t.name}
+                    </Link>
+                ))
+            }
         </div>
-    );
+    </div>
+);
 
     return (
         <div>
@@ -64,7 +71,7 @@ function Type() {
             <DamageSection label="No damage to" types={dr.no_damage_to} />
             <DamageSection label="No damage from" types={dr.no_damage_from} />
 
-            <Divider sx={{ my: 2 }} />
+            <br />
 
             <Typography variant="h5" gutterBottom>Pokémon with this Type</Typography>
             <List dense>

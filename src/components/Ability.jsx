@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Divider, List, ListItem } from "@mui/material";
+import { Typography, List, ListItem } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import NotFound from "./NotFound";
@@ -39,7 +39,7 @@ function Ability() {
             <Typography variant="body1"><strong>Generation:</strong> {ability.generation.name}</Typography>
             <Typography variant="body1"><strong>Main Series:</strong> {ability.is_main_series ? "Yes" : "No"}</Typography>
 
-            <Divider sx={{ my: 2 }} />
+            <br />
 
             {englishEffect && (
                 <div mb={2}>
@@ -56,7 +56,7 @@ function Ability() {
                 </div>
             )}
 
-            <Divider sx={{ my: 2 }} />
+            <br />
 
             <Typography variant="h6" gutterBottom>Pokémon with this Ability</Typography>
             <List dense>

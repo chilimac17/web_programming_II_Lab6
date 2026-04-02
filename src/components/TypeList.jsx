@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, List, ListItem, ListItemButton, CircularProgress } from "@mui/material";
+import { Typography, List, ListItem, ListItemButton } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import Pagination from "./Pagination";
@@ -53,8 +53,13 @@ function TypeList() {
 
     const extractId = (url) => url.split("/").filter(Boolean).pop();
 
-    if (notFound) return <NotFound />;
-    if (loading) return <div>Loading.......</div>;
+    if (notFound){
+         return <NotFound />;
+    }
+
+    if (loading) {
+        return <div>Loading.......</div>;
+    }
 
     return (
         <div>
